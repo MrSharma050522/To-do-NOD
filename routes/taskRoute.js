@@ -36,4 +36,40 @@ router.get("/mytask", authUser, async (req, res) => {
   }
 });
 
+router.patch("/update-task/:id", authUser, async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    // console.log(task);
+
+    res.status(200).json({
+      status: "success",
+      task,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+});
+
+router.delete("/delete/:id", authUser, async (req, res) => {
+  try {
+    // console.log(req.params.id);
+    const task = await Task.findByIdAndDelete(req.params.id);
+    // console.log(task);
+    res.status(200).json({
+      status: "success",
+      body: task,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+});
+
 module.exports = router;
