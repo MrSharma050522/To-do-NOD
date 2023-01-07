@@ -8,6 +8,9 @@ const taskSchema = new mongoose.Schema(
       min: 3,
       trim: true,
     },
+    completed: {
+      type: Boolean,
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
